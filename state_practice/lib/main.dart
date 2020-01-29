@@ -97,7 +97,7 @@ class _ParentWidgetState extends State<ParentWidget> {
   // }
   /**混合管理 tapboxC */
   Widget build(BuildContext context) {
-    return new Container(
+    return new SingleChildScrollView(
         child: new Column(
       children: <Widget>[
         new TapboxC(
@@ -118,8 +118,39 @@ class _ParentWidgetState extends State<ParentWidget> {
           TextSpan(text: "Home:"),
           TextSpan(
               text: "https://flutterchina.club",
-              style: TextStyle(color: Colors.blue))
+              style: TextStyle(color: Colors.blue, fontSize: 16))
         ])),
+        // IconButton(icon: Icon(Icons.thumb_up),onPressed:(){}),
+        OutlineButton(
+          child: Text("normal"),
+          onPressed: () {},
+        ),
+        FlatButton(
+          child: Text("flatbtn"),
+          color: Colors.blue,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          onPressed: () {},
+        ),
+        Image.asset("images/avatar.jpg", width: 50),
+        Image(
+          image: AssetImage("images/avatar.jpg"),
+          width: 80,
+          color: Colors.blue,
+          colorBlendMode: BlendMode.difference,
+        ),
+        Image.network(
+            "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4",
+            width: 100.0),
+        Text(
+          "\uE914\uE000",
+          style: TextStyle(
+              fontFamily: "MaterialIcons",
+              fontSize: 20,
+              height: 2,
+              decorationStyle: null,
+              color: Colors.green),
+        ),
         DefaultTextStyle(
             style: TextStyle(color: Colors.red, fontSize: 20),
             textAlign: TextAlign.center,
