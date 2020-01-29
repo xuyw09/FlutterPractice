@@ -4,6 +4,7 @@ import 'tapboxB.dart';
 import 'tapboxC.dart';
 import "SwitchAndCheckBoxTestRoute.dart";
 import "FormRoute.dart";
+import "ProgressRoute.dart";
 
 void main() => runApp(MyApp());
 
@@ -106,6 +107,7 @@ class _ParentWidgetState extends State<ParentWidget> {
           active: _active,
           onChanged: _handleTapboxChanged,
         ),
+        ProgressRoute(),
         Text(
           "Hello Word!" * 4,
           textScaleFactor: 0.5,
