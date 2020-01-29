@@ -80,7 +80,7 @@ class _ParentWidgetState extends State<ParentWidget> {
   }
 
   @override
-  //由parent管理tapboxB的state tapboxB是无状态Widget 
+  //由parent管理tapboxB的state tapboxB是无状态Widget
   // Widget build(BuildContext context) {
   //   return new Container(
   //       child: new TapboxB(
@@ -97,11 +97,44 @@ class _ParentWidgetState extends State<ParentWidget> {
   // }
   /**混合管理 tapboxC */
   Widget build(BuildContext context) {
-    return new Container( 
-      child: new TapboxC( 
-        active: _active,
-        onChanged: _handleTapboxChanged,
-      )
-    );
+    return new Container(
+        child: new Column(
+      children: <Widget>[
+        new TapboxC(
+          active: _active,
+          onChanged: _handleTapboxChanged,
+        ),
+        Text(
+          "Hello Word!" * 4,
+          textScaleFactor: 0.5,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              fontFamily: "Courier",
+              background: new Paint()..color = Colors.yellow,
+              decorationStyle: TextDecorationStyle.dotted),
+        ),
+        Text.rich(TextSpan(children: [
+          TextSpan(text: "Home:"),
+          TextSpan(
+              text: "https://flutterchina.club",
+              style: TextStyle(color: Colors.blue))
+        ])),
+        DefaultTextStyle(
+            style: TextStyle(color: Colors.red, fontSize: 20),
+            textAlign: TextAlign.center,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('hello world'),
+                Text("I'm Joy"),
+                Text(
+                  "Nice to meet U",
+                  style: TextStyle(inherit: false, color: Colors.grey),
+                )
+              ],
+            ))
+      ],
+    ));
   }
 }
