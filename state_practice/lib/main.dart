@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'tapboxA.dart';
 import 'tapboxB.dart';
 import 'tapboxC.dart';
+import "SwitchAndCheckBoxTestRoute.dart";
+import "FormRoute.dart";
 
 void main() => runApp(MyApp());
 
@@ -122,15 +124,27 @@ class _ParentWidgetState extends State<ParentWidget> {
         ])),
         // IconButton(icon: Icon(Icons.thumb_up),onPressed:(){}),
         OutlineButton(
-          child: Text("normal"),
-          onPressed: () {},
+          child: Text(
+            "normal outlineBtn click to Switch&Checkbox Route",
+            style: TextStyle(color: Colors.blue),
+          ),
+          borderSide: BorderSide(color: Colors.green),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return SwitchAndCheckBoxTestRoute();
+            }));
+          },
         ),
         FlatButton(
-          child: Text("flatbtn"),
+          child: Text("flatbtn click to FormRoute"),
           color: Colors.blue,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return FormTestRoute();
+            }));
+          },
         ),
         Image.asset("images/avatar.jpg", width: 50),
         Image(
