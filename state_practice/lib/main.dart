@@ -5,6 +5,9 @@ import 'tapboxC.dart';
 import "SwitchAndCheckBoxTestRoute.dart";
 import "FormRoute.dart";
 import "ProgressRoute.dart";
+import "LayoutRoute.dart";
+import "Scaffold.dart";
+import "ScrollRoute.dart";
 
 void main() => runApp(MyApp());
 
@@ -100,88 +103,134 @@ class _ParentWidgetState extends State<ParentWidget> {
   // }
   /**混合管理 tapboxC */
   Widget build(BuildContext context) {
-    return new SingleChildScrollView(
-        child: new Column(
-      children: <Widget>[
-        new TapboxC(
-          active: _active,
-          onChanged: _handleTapboxChanged,
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("demo"),
         ),
-        ProgressRoute(),
-        Text(
-          "Hello Word!" * 4,
-          textScaleFactor: 0.5,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              fontFamily: "Courier",
-              background: new Paint()..color = Colors.yellow,
-              decorationStyle: TextDecorationStyle.dotted),
-        ),
-        Text.rich(TextSpan(children: [
-          TextSpan(text: "Home:"),
-          TextSpan(
-              text: "https://flutterchina.club",
-              style: TextStyle(color: Colors.blue, fontSize: 16))
-        ])),
-        // IconButton(icon: Icon(Icons.thumb_up),onPressed:(){}),
-        OutlineButton(
-          child: Text(
-            "normal outlineBtn click to Switch&Checkbox Route",
-            style: TextStyle(color: Colors.blue),
-          ),
-          borderSide: BorderSide(color: Colors.green),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return SwitchAndCheckBoxTestRoute();
-            }));
-          },
-        ),
-        FlatButton(
-          child: Text("flatbtn click to FormRoute"),
-          color: Colors.blue,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return FormTestRoute();
-            }));
-          },
-        ),
-        Image.asset("images/avatar.jpg", width: 50),
-        Image(
-          image: AssetImage("images/avatar.jpg"),
-          width: 80,
-          color: Colors.blue,
-          colorBlendMode: BlendMode.difference,
-        ),
-        Image.network(
-            "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4",
-            width: 100.0),
-        Text(
-          "\uE914\uE000",
-          style: TextStyle(
-              fontFamily: "MaterialIcons",
-              fontSize: 20,
-              height: 2,
-              decorationStyle: null,
-              color: Colors.green),
-        ),
-        DefaultTextStyle(
-            style: TextStyle(color: Colors.red, fontSize: 20),
-            textAlign: TextAlign.center,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        body: new SingleChildScrollView(
+            child: new Column(
+          children: <Widget>[
+            new TapboxC(
+              active: _active,
+              onChanged: _handleTapboxChanged,
+            ),
+            ProgressRoute(),
+            Text(
+              "Hello Word!" * 4,
+              textScaleFactor: 0.5,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontFamily: "Courier",
+                  background: new Paint()..color = Colors.yellow,
+                  decorationStyle: TextDecorationStyle.dotted),
+            ),
+            Text.rich(TextSpan(children: [
+              TextSpan(text: "Home:", style: TextStyle(fontSize: 12)),
+              TextSpan(
+                  text: "https://flutterchina.club",
+                  style: TextStyle(color: Colors.blue, fontSize: 16))
+            ])),
+            Wrap(
               children: <Widget>[
-                Text('hello world'),
-                Text("I'm Joy"),
-                Text(
-                  "Nice to meet U",
-                  style: TextStyle(inherit: false, color: Colors.grey),
+                // IconButton(icon: Icon(Icons.thumb_up),onPressed:(){}),
+                OutlineButton(
+                  child: Text(
+                    "Switch&Checkbox",
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  borderSide: BorderSide(color: Colors.green),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return SwitchAndCheckBoxTestRoute();
+                    }));
+                  },
+                ),
+                FlatButton(
+                  child: Text("FormRoute"),
+                  color: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return FormTestRoute();
+                    }));
+                  },
+                ),
+                RaisedButton(
+                  child: Text("LayoutRoute"),
+                  color: Colors.pink,
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return LayoutRoute();
+                    }));
+                  },
+                ),
+                RaisedButton.icon(
+                  icon: Icon(Icons.send),
+                  label: Text("Send"),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ScaffoldRoute();
+                    }));
+                  },
+                ),
+                OutlineButton.icon(
+                  icon: Icon(Icons.info),
+                  label: Text("scroll"),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ScrollRoute();
+                    }));
+                  },
                 )
               ],
-            ))
-      ],
-    ));
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset("images/avatar.jpg", width: 50),
+                Image(
+                  image: AssetImage("images/avatar.jpg"),
+                  width: 80,
+                  color: Colors.blue,
+                  colorBlendMode: BlendMode.difference,
+                ),
+                Image.network(
+                    "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4",
+                    width: 100.0),
+              ],
+            ),
+            Text(
+              "\uE914\uE000",
+              style: TextStyle(
+                  fontFamily: "MaterialIcons",
+                  fontSize: 20,
+                  height: 2,
+                  decorationStyle: null,
+                  color: Colors.green),
+            ),
+            DefaultTextStyle(
+                style: TextStyle(color: Colors.red, fontSize: 20),
+                textAlign: TextAlign.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('hello world'),
+                    Text("I'm Joy"),
+                    Text(
+                      "Nice to meet U",
+                      style: TextStyle(inherit: false, color: Colors.grey),
+                    )
+                  ],
+                ))
+          ],
+        )));
   }
 }
