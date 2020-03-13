@@ -8,6 +8,14 @@ import "ProgressRoute.dart";
 import "LayoutRoute.dart";
 import "Scaffold.dart";
 import "ScrollRoute.dart";
+import './EventHandle/GestureDetector.dart';
+import './EventHandle/Drag.dart';
+import './EventHandle/GestureRecognizer.dart';
+import './EventHandle/Notifycation.dart';
+import './CustomWidget/groupWidget.dart';
+import './File_Http/fileUpload.dart';
+import './File_Http/httpRequest.dart';
+import './File_Http/dioRoute.dart';
 
 void main() => runApp(MyApp());
 
@@ -188,7 +196,66 @@ class _ParentWidgetState extends State<ParentWidget> {
                       return ScrollRoute();
                     }));
                   },
-                )
+                ),
+                OutlineButton.icon(
+                  icon: Icon(Icons.info),
+                  label: Text("Gesture"),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return GestureDetectorTestRoute();
+                    }));
+                  },
+                ),
+                OutlineButton.icon(
+                  icon: Icon(Icons.info),
+                  label: Text("Drag"),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return Drag();
+                    }));
+                  },
+                ),
+                OutlineButton.icon(
+                  icon: Icon(Icons.info),
+                  label: Text("recognizer"),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return GestureRecognizer();
+                    }));
+                  },
+                ),
+                OutlineButton.icon(
+                  icon: Icon(Icons.info),
+                  label: Text("Notification"),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return NotificationRoute();
+                    }));
+                  },
+                ),
+                OutlineButton.icon(
+                  icon: Icon(Icons.info),
+                  label: Text("httpRequest"),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return NetWorkPage();
+                    }));
+                  },
+                ),
+                GradientButton(
+                  colors: [Colors.orange, Colors.red],
+                  height: 50.0,
+                  child: Text("Submit"),
+                  onPressed: (){ Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return FileOperationRoute();
+                    }));},
+                ),
               ],
             ),
             Row(
