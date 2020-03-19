@@ -1,4 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/user.dart';
+import 'dart:convert';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -8,8 +12,61 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   TextEditingController _usernameController = new TextEditingController();
   TextEditingController _pwdController = new TextEditingController();
-  GlobalKey _formKey = new GlobalKey<FormState>();  ///获取formstate 可以对Form的子孙Formfield进行统一操作 有validate，save，reset等方法
+  GlobalKey _formKey = new GlobalKey<FormState>();
 
+  ///获取formstate 可以对Form的子孙Formfield进行统一操作 有validate，save，reset等方法
+
+  Future _signIn() async {
+    print("*******start submit user info*******");
+    Dio _dio = new Dio();
+    _dio.options.baseUrl = 'https://sso.ce-safe.com';
+    // devLoginUrl: 'http://10.0.2.2:3900'
+    // distloginUrl: 'https://sso.ce-safe.com'
+
+    //添加拦截器
+    _dio.interceptors
+      ..add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+        print("interceptors");
+        SharedPreferences _prefs = await SharedPreferences.getInstance();
+        var userJson = _prefs.getString('user');
+        print("****preferences***");
+        print(userJson);
+        if (userJson != null && userJson.isNotEmpty) {
+          User user = User.fromJson(jsonDecode(userJson));
+          options.headers
+            ..addAll({
+              "cookie": {"userName": user.userName},
+              'cookie': {'uid': user.userName}
+            });
+        }
+        return options;
+      }))
+    ..add(LogInterceptor(
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+        responseBody: true,
+      ));
+
+
+    // send signin request
+    print("****send message****");
+    Response response = await _dio.post('/user/login', data: {
+      "username": _usernameController.text.trim(),
+      "password": _pwdController.text.trim()
+    });
+    print('***********response get************');
+    print(response);
+    if (response.statusCode == 200) {
+      User user = User.fromJson(response.data);
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      _prefs.setString('user', jsonEncode(user));
+      print('SignIn success');
+    } else {
+      //show Error Dialog
+      print('SignIn failure');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +131,9 @@ class _SignInPageState extends State<SignInPage> {
                     //通过验证 提交表格
                     print(_usernameController.text);
                     print(_pwdController.text);
+                    _signIn();
+                  } else {
+                    //show error
                   }
                 }),
           )
@@ -82,4 +142,3 @@ class _SignInPageState extends State<SignInPage> {
     ));
   }
 }
-
