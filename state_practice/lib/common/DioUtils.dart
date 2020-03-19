@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 
 class DioUtils {
-  static final String BASE_URL = "https://www.wanandroid.com";
+  // static final String BASE_URL = "http://ce-safe.com:8084";
+  // static final String BASE_URL = "https://www.wanandroid.com";
+  static final String BASE_URL = "https://yuntu.ce-safe.com";
   static DioUtils _instance;
   Dio _dio;
   BaseOptions _baseOptions;
@@ -15,9 +17,14 @@ class DioUtils {
   DioUtils() {
     _baseOptions = new BaseOptions(
         baseUrl: BASE_URL,
-        connectTimeout: 5000,
-        receiveTimeout: 5000,
-        headers: {},
+        connectTimeout: 15000,
+        receiveTimeout: 15000,
+        // headers: {
+        //   'cookie': {
+        //     'userName': 'xuyw',
+        //     'uid': "3fc6aa10643511ea896df1332016a308"
+        //   }
+        // },
         // contentType: ContentType.json,
         responseType: ResponseType.json);
 
@@ -25,9 +32,7 @@ class DioUtils {
 
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions requestions) async {
-      requestions.queryParameters["token"] = "testtoken123443423";
-      requestions.queryParameters['userId'] = "123456";
-      print('请求参数${requestions.headers.toString()}');
+      print('请求头${requestions.headers.toString()}');
       print('请求参数${requestions.queryParameters.toString()}');
       return requestions;
     }, onResponse: (Response response) {
@@ -43,7 +48,7 @@ class DioUtils {
     try {
       response = await _dio.get(url,
           queryParameters: data, options: options, cancelToken: cancelToken);
-      // print('get success --${response.data}');
+      print('get success --${response}');
     } on DioError catch (e) {
       print('请求失败---错误类型${e.type}');
     }

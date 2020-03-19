@@ -9,7 +9,7 @@ class FormTestRoute extends StatefulWidget {
 class _FormTestRouteState extends State<FormTestRoute> {
   TextEditingController _unameController = new TextEditingController();
   TextEditingController _pwdController = new TextEditingController();
-  GlobalKey _formKey = new GlobalKey<FormState>();
+  GlobalKey _formKey = new GlobalKey<FormState>();  ///获取formstate 可以对Form的子孙Formfield进行统一操作 有validate，save，reset等方法
 
   @override
   Widget build(BuildContext context) {
