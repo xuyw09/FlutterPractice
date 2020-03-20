@@ -1,28 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sigin_in_practice/pages/home/home_page.dart';
 import './pages/sign_in/Signin_page.dart';
+import './common/global.dart';
+import './states/index.dart';
 
-void main() => runApp(MyApp());
+// void main() => runApp(MyApp());
+void main() => Global.init().then((e) => runApp(MyApp()));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: <SingleChildCloneableWidget>[
+        ChangeNotifierProvider.value(value: UserModel())
+      ],
+      child: Consumer<UserModel>(
+        builder: (BuildContext context, userModel, Widget child) {
+          return MaterialApp(
+            title: 'HappyToAnswer',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: HomeRoute(),
+            // 注册路由表
+            routes: <String, WidgetBuilder>{
+              "signin": (context) => SignInPage(),
+              "home": (context) => HomeRoute(),
+            },
+          );
+        },
       ),
-      home: SignInPage(),
     );
+
+    // return MaterialApp(
+    //   title: 'Flutter Demo',
+    //   theme: ThemeData(
+    //     primarySwatch: Colors.blue,
+    //   ),
+    //   home: HomeRoute(),
+    //   // 注册路由表
+    //   routes: <String, WidgetBuilder>{
+    //     "signin": (context) => SignInPage(),
+    //   },
+    // );
   }
 }
 

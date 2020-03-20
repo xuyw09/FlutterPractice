@@ -28,7 +28,7 @@ class _SignInPageState extends State<SignInPage> {
       ..add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
         print("interceptors");
         SharedPreferences _prefs = await SharedPreferences.getInstance();
-        var userJson = _prefs.getString('user');
+        var userJson = _prefs.getString('curUser');
         print("****preferences***");
         print(userJson);
         if (userJson != null && userJson.isNotEmpty) {
@@ -60,8 +60,9 @@ class _SignInPageState extends State<SignInPage> {
     if (response.statusCode == 200) {
       User user = User.fromJson(response.data);
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      _prefs.setString('user', jsonEncode(user));
+      _prefs.setString('curUser', jsonEncode(user));
       print('SignIn success');
+      Navigator.of(context).pushNamed('home');
     } else {
       //show Error Dialog
       print('SignIn failure');
