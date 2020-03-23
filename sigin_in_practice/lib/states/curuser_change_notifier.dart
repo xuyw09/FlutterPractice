@@ -17,7 +17,7 @@ class CurUserChangeNotifier extends ChangeNotifier {
 class UserModel extends CurUserChangeNotifier {
   User get user => _curUser;
 
-  bool get isLogin => user != null || user?.userName != null;
+  bool get isLogin => user?.userName != null;
 
 //用户信息发生变化，更新用户信息并通知依赖它的子孙Widgets更新
   set user(User user) {
