@@ -7,9 +7,8 @@ class CurUserChangeNotifier extends ChangeNotifier {
 
   @override
   void notifyListeners() {
-    print('notifyListeners');
+    print('user notifyListeners');
     Global.saveCurUser(null);
-    print(Global.curUser);
     super.notifyListeners();
   }
 }

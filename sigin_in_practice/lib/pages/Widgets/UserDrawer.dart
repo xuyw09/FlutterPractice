@@ -56,8 +56,8 @@ class UserDrawer extends StatelessWidget {
             onTap: () => print('查看未读消息'),
           ),
           ListTile(
-            title: Text("查看帮助"),
-            leading: Icon(Icons.question_answer),
+            title: Text("用户帮助"),
+            leading: Icon(Icons.help),
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
             trailing: Icon(Icons.keyboard_arrow_right),
             enabled: true,
