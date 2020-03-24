@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sigin_in_practice/pages/Widgets/Loading.dart';
 import '../../index.dart';
 
 class SignInPage extends StatefulWidget {
@@ -76,16 +77,15 @@ class _SignInPageState extends State<SignInPage> {
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w300)),
                   onPressed: () async {
+                      Loading.showDialog(context, "正在登录");
                     if ((_formKey.currentState as FormState).validate()) {
                       //通过验证 提交表格
-                      //TODOshowloading
-                      print(_usernameController.text);
-
                       User user = await HttpUtils.signIn(
                           _usernameController.text.trim(),
                           _pwdController.text.trim());
                       if (user != null) {
                         userModel.user = user;
+                        Loading.hideDialog(context);
                         Navigator.of(context).pushNamed('home');
                       }
                     } else {
