@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sigin_in_practice/pages/Widgets/BottomNavigationBar.dart';
+import 'package:sigin_in_practice/pages/Widgets/CityPopupMenu.dart';
 import 'package:sigin_in_practice/pages/Widgets/UserDrawer.dart';
 import 'package:sigin_in_practice/pages/home/home_preview.dart';
 import 'package:sigin_in_practice/pages/home/project_list.dart';
 import 'package:sigin_in_practice/pages/home/question_answer.dart';
 import 'package:sigin_in_practice/pages/sign_in/Signin_page.dart';
-import 'package:sigin_in_practice/states/curCity_change_notifier.dart';
 import '../../index.dart';
 
 class HomeRoute extends StatefulWidget {
@@ -14,27 +13,19 @@ class HomeRoute extends StatefulWidget {
 }
 
 class _HomeRouteState extends State<HomeRoute> {
-  final List<String> cities = ['上海', '南京'];
-  String _currentCity = '上海';
   int _curIndex = 0;
-  Widget dropdownWidget() {
-    return DropdownButton(
-        items: cities
-            .map((c) => DropdownMenuItem(child: Text(c), value: c))
-            .toList(),
-        onChanged: (String value) {
-          setState(() {
-            _currentCity = value;
-          });
-        },
-        value: cities.first);
-  }
+  String curCity; // cityDropdown 选择
 
   List<Widget> _children = [
     new HomePreview(),
     new ProjectList(),
     new QuestionAnswer()
   ];
+  _curCityChanged(city) {
+    setState(() {
+      curCity = city;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +34,7 @@ class _HomeRouteState extends State<HomeRoute> {
       return Scaffold(body: SignInPage());
     } else {
       return Scaffold(
-        appBar: AppBar(
-            title: Text('HappyToAnswer'), actions: <Widget>[dropdownWidget()]),
+        appBar: _appBar(),
         body: _children[_curIndex],
         drawer: new UserDrawer(),
         bottomNavigationBar: BottomNavigationBar(
@@ -62,7 +52,6 @@ class _HomeRouteState extends State<HomeRoute> {
                 icon: Icon(Icons.question_answer), title: Text('问答'))
           ],
           onTap: (index) {
-            print(index);
             setState(() {
               _curIndex = index;
             });
@@ -72,21 +61,21 @@ class _HomeRouteState extends State<HomeRoute> {
     }
   }
 
-  Widget _buildBody() {
-    CityModel cityModel = Provider.of<CityModel>(context);
-    return Column(
-      children: <Widget>[
-        Text(
-          "欢迎你",
-          style: TextStyle(fontSize: 20, color: Colors.pink),
-        ),
-        RaisedButton(
-          child: Text('获取城市列表'),
-          onPressed: () {
-            //获取城市列表
-          },
-        )
-      ],
-    );
+  Widget _appBar() {
+    switch (_curIndex) {
+      case 0:
+        return AppBar(title: Text('HappyToAnswer'));
+      case 1:
+        return AppBar(
+            title: Text(curCity != null ? '${curCity}项目列表' : '项目列表'),
+            actions: <Widget>[
+              CityPopupMenu(
+                  curCityChanged: (curCity) => _curCityChanged(curCity))
+            ]);
+      case 2:
+        return AppBar(title: Text('技术问答'));
+      default:
+        return AppBar(title: Text('HappyToAnswer'));
+    }
   }
 }
