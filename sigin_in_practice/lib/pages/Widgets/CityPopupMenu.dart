@@ -10,7 +10,6 @@ class CityPopupMenu extends StatefulWidget {
 
 class _CityPopupMenuState extends State<CityPopupMenu> {
   final List<String> cities = ['上海', '南京'];
-  String _currentCity = '上海';
   Widget dropdownWidget() {
     return PopupMenuButton(
       icon: Icon(Icons.location_on),

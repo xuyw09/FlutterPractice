@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sigin_in_practice/pages/Widgets/BottomNavigationBar.dart';
 import 'package:sigin_in_practice/pages/Widgets/CityPopupMenu.dart';
 import 'package:sigin_in_practice/pages/Widgets/UserDrawer.dart';
 import 'package:sigin_in_practice/pages/home/home_preview.dart';
@@ -27,6 +28,12 @@ class _HomeRouteState extends State<HomeRoute> {
     });
   }
 
+  _curIndexChanged(index) {
+    setState(() {
+      _curIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
@@ -34,35 +41,18 @@ class _HomeRouteState extends State<HomeRoute> {
       return Scaffold(body: SignInPage());
     } else {
       return Scaffold(
-        appBar: _appBar(),
+        appBar: _appBar(_curIndex),
         body: _children[_curIndex],
         drawer: new UserDrawer(),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _curIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('首页'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.format_list_bulleted),
-              title: Text('项目'),
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.question_answer), title: Text('问答'))
-          ],
-          onTap: (index) {
-            setState(() {
-              _curIndex = index;
-            });
-          },
+        bottomNavigationBar: BottomNavigation(
+          curIndexChanged: (curIndex) => _curIndexChanged(curIndex),
         ),
       );
     }
   }
 
-  Widget _appBar() {
-    switch (_curIndex) {
+  Widget _appBar(index) {
+    switch (index) {
       case 0:
         return AppBar(title: Text('HappyToAnswer'));
       case 1:
