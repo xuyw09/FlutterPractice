@@ -45,6 +45,7 @@ class _HomeRouteState extends State<HomeRoute> {
         body: _children[_curIndex],
         drawer: new UserDrawer(),
         bottomNavigationBar: BottomNavigation(
+          curIndex: _curIndex,
           curIndexChanged: (curIndex) => _curIndexChanged(curIndex),
         ),
       );

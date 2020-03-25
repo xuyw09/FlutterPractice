@@ -3,7 +3,8 @@ import '../../index.dart';
 
 class BottomNavigation extends StatefulWidget {
   final curIndexChanged;
-  const BottomNavigation({Key key, this.curIndexChanged}) : super(key: key);
+  final curIndex;
+  const BottomNavigation({Key key, this.curIndexChanged,this.curIndex}) : super(key: key);
   @override
   _BottomNavigationState createState() => _BottomNavigationState();
 }
@@ -13,6 +14,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Container(
       child: BottomNavigationBar(
+        currentIndex: widget.curIndex,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
