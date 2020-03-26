@@ -3,6 +3,7 @@ import '../models/city.dart';
 
 class CurCityChangeNotifier extends ChangeNotifier {
   City get _curCity => Global.curCity;
+  List<City> get _cityList => Global.cityList;
 
   @override
   void notifyListeners() {
@@ -14,6 +15,7 @@ class CurCityChangeNotifier extends ChangeNotifier {
 
 class CityModel extends CurCityChangeNotifier {
   City get city => _curCity;
+  List<City> get cityList => _cityList;
 
 //更新curCity
   set city(City _city) {

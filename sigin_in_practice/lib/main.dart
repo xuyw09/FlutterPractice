@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sigin_in_practice/pages/home/home_page.dart';
+import 'package:sigin_in_practice/states/curCity_change_notifier.dart';
 import './pages/sign_in/Signin_page.dart';
 import './common/global.dart';
 import './states/index.dart';
@@ -14,10 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: <SingleChildCloneableWidget>[
-        ChangeNotifierProvider.value(value: UserModel())
+        ChangeNotifierProvider.value(value: UserModel()),
+        ChangeNotifierProvider.value(value: CityModel()),
       ],
-      child: Consumer<UserModel>(
-        builder: (BuildContext context, userModel, Widget child) {
+      child: Consumer2<UserModel, CityModel>(
+        builder: (BuildContext context, userModel, cityModel, Widget child) {
           return MaterialApp(
             title: 'HappyToAnswer',
             theme: ThemeData(

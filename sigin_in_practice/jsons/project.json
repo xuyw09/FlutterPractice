@@ -1,0 +1,19 @@
+{
+    "lineName": "1号线",
+    "isSubway": true,
+    "prjId": 572,
+    "name": "万科南站商务城二期（a-05）项目",
+    "lineId": 1,
+    "coor": {
+        "lat": 31.166338698986635,
+        "lng": 121.43097817897824
+    },
+    "deviceTypes": [
+        0
+    ],
+    "projectType": "AutoMonitor",
+    "constructionCorp": "京海",
+    "department": "京海",
+    "ownerCorp": "上海地铁",
+    "isAutoProject": true
+}

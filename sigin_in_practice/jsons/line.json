@@ -1,0 +1,9 @@
+{
+    "id": 1,
+    "name": "1号线",
+    "locate": "上海",
+    "cityId": 1,
+    "seq": 1,
+    "isSubway": true,
+    "sections": null
+}

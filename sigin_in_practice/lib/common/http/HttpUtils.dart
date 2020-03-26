@@ -41,12 +41,64 @@ class HttpUtils {
     dio.options.baseUrl = ApiUrl['login'];
     Response response = await dio.post('/user/login',
         data: {"username": username, "password": password});
-        
     if (response.statusCode == 200) {
       User user = User.fromJson(response.data);
       return user;
     } else {
       print('---SignIn failure:${response.statusCode}');
+      return null;
+    }
+  }
+
+  static Future<List<City>> getCityList() async {
+    print("---get cities---");
+    dio.options.baseUrl = ApiUrl['meta'];
+    Response response = await dio.get('/meta/cities');
+
+    if (response.statusCode == 200) {
+      // data = response.data.map((c)=>City.fromJson(c)).toList();  这样运行会出错，暂时还不知道为什么  --！
+      var data = response.data.map((c) {
+        var city = City.fromJson(c);
+        return city;
+      }).toList();
+
+      List<City> cityList = new List<City>.from(data);
+      return cityList;
+    } else {
+      print('---GetCities failure:${response.statusCode}');
+      return null;
+    }
+  }
+
+  static Future<List<Project>> getProjectList(String cityName) async {
+    print("---get line list with projects---");
+    dio.options.baseUrl = ApiUrl['auto'];
+    Response response = await dio.get('/auto/city/${cityName}/lines');
+
+    if (response.statusCode == 200) {
+      var data = response.data.map((line) {
+        var linePrj = LinePrjs.fromJson(line);
+        return linePrj;
+      }).toList();
+
+      List<LinePrjs> linePrjsList = new List<LinePrjs>.from(data);
+
+      List<Project> projectList=[];
+      linePrjsList.forEach((line) {
+
+        List<Project> originalList = line.projects.map((p) {
+          var _p = Project.fromJson(p);
+          return _p;
+        }).toList();
+
+        var _projects = List<Project>.from(originalList);
+        projectList.addAll(_projects);
+      });
+      print('----共有项目个数：-----${projectList.length}');
+
+      return projectList;
+    } else {
+      print('---GetCities failure:${response.statusCode}');
       return null;
     }
   }
